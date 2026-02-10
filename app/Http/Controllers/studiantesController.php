@@ -10,7 +10,7 @@ class studiantesController extends Controller
 {
     public function index()
     {
-        $estudiantes = Estudiantes::paginate(10);
+        $estudiantes = Estudiantes::orderBy('id','asc')->paginate(10);
         return view('estudiantes', compact('estudiantes'));
     }
 
@@ -94,4 +94,19 @@ class studiantesController extends Controller
             ]
         ]);
     }
+
+    public function eliminarTodos(){
+            Estudiantes::query()->delete();
+
+        return redirect()
+            ->route('estudiantes.index')
+            ->with([
+            'alert' => [
+            'type' => 'success',
+            'title' => 'Eliminados',
+            'message' => 'Todos los estudiantes han sido eliminados correctamente'
+            ]
+        ]);
+    }
+
 }

@@ -14,3 +14,5 @@ Route::get('/estudiantes/{id}/editar', [studiantesController::class, 'editar'])-
 Route::put('/estudiantes/{id}', [studiantesController::class, 'actualizar'])->name('estudiantes.actualizar');
 
 Route::delete('/estudiantes/{id}', [studiantesController::class, 'eliminar'])->name('estudiantes.eliminar');
+
+Route::delete('/estudiantes', [studiantesController::class, 'eliminarTodos'])->name('estudiantes.eliminarTodos');
