@@ -22,5 +22,6 @@ class Estudiantes extends Model
         'telefono',
         'lenguaje',
         'foto'
+        
     ];
 }

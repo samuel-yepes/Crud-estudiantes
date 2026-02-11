@@ -26,7 +26,6 @@
 </head>
 
 <body class="antialiased p-6 md:p-12">
-
     <div class="form-card mx-auto">
 
         <div class="mb-6">
@@ -169,6 +168,47 @@
         </div>
     </div>
 
+    @if (session('alert'))
+        <div id="alertModal" class="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
+
+            <div class="bg-white rounded-2xl shadow-xl w-full max-w-md p-6
+                animate-fade-in">
+
+                <div class="flex items-center gap-3 mb-4">
+                    <div
+                        class="w-10 h-10 flex items-center justify-center
+                        rounded-full bg-green-100 text-green-600">
+                        ✓
+                    </div>
+
+                    <h2 class="text-lg font-bold text-slate-800">
+                        {{ session('alert.title') }}
+                    </h2>
+                </div>
+
+                <p class="text-slate-600 text-sm mb-6">
+                    {{ session('alert.message') }}
+                </p>
+
+                <div class="flex justify-end">
+                    <button onclick="closeModal()"
+                        class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700
+                       text-white text-sm font-semibold rounded-lg transition">
+                        Aceptar
+                    </button>
+                </div>
+            </div>
+        </div>
+    @endif
+
+
 </body>
 
 </html>
+
+<script>
+    function closeModal() {
+        document.getElementById('alertModal').classList.add('hidden');
+    }
+</script>
+
