@@ -1,98 +1,166 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Estudiante</title>
+    <title>Editar Estudiante | Sistema Académico</title>
+
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
     <style>
-        body { 
+        body {
             font-family: 'Inter', sans-serif;
-            background-color: #f8fafc; 
+            background: linear-gradient(180deg, #f8fafc 0%, #eef2ff 100%);
         }
-        .form-container {
-            max-width: 500px;
+
+        .form-card {
+            max-width: 520px;
+        }
+
+        .input-focus:focus {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.18);
         }
     </style>
 </head>
-<body class="p-6 md:p-12">
 
-    <div class="form-container mx-auto">
-        <div class="mb-6">
-            <a href="{{ route('estudiantes.index') }}" class="text-slate-400 hover:text-amber-600 text-sm font-medium flex items-center gap-1 transition-colors">
-                <svg xmlns="http://www.w3.org" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-                </svg>
-                Cancelar y volver
+<body class="antialiased p-6 md:p-12">
+
+    <div class="form-card mx-auto">
+
+        <div class="mb-8">
+            <a href="{{ route('estudiantes.index') }}"
+                class="inline-flex items-center gap-3 text-sm font-semibold text-slate-500 hover:text-indigo-600 transition">
+                <span class="p-2 bg-white rounded-xl shadow border border-slate-200 hover:bg-indigo-50 transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                    </svg>
+                </span>
+                Volver al listado
             </a>
         </div>
 
-        <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
-            <div class="p-8">
-                <div class="flex items-center gap-3 mb-2">
-                    <div class="p-2 bg-amber-50 rounded-lg">
-                        <svg xmlns="http://www.w3.org" class="h-5 w-5 text-amber-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2.25 2.25 0 113.182 3.182L12 18.5H8v-4l9.586-9.586z" />
-                        </svg>
-                    </div>
-                    <h1 class="text-2xl font-bold text-slate-800 tracking-tight">Editar Estudiante</h1>
+        <div class="bg-white rounded-3xl border border-slate-200 shadow-xl overflow-hidden">
+
+            <div class="relative overflow-hidden bg-indigo-600 px-8 pt-8 pb-16">
+
+                <div class="absolute top-0 right-0 -mr-10 -mt-10 w-40 h-40 bg-indigo-500 rounded-full opacity-50"></div>
+                <div class="absolute bottom-0 left-0 ml-10 mb-[-50px] w-20 h-20 bg-indigo-700 rounded-full opacity-50">
                 </div>
-                <p class="text-slate-500 text-sm mb-8">Actualiza la información del registro <span class="font-mono text-amber-600">#{{ $estudiante->id }}</span></p>
 
-                <form action="{{ route('estudiantes.actualizar', $estudiante->id) }}" method="POST" class="space-y-5">
-                    @csrf
-                    @method('PUT')
-                    
-                    <div>
-                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Nombre Completo</label>
-                        <input type="text" name="nombre" value="{{ $estudiante->nombre }}" 
-                               class="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition-all text-sm text-slate-700 bg-slate-50/50" required>
-                    </div>
+                <div class="relative z-10 flex flex-col items-center">
+                    <div class="relative group">
 
-                    <div>
-                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Correo Electrónico</label>
-                        <input type="email" name="correo" value="{{ $estudiante->correo }}" 
-                               class="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition-all text-sm text-slate-700 bg-slate-50/50" required>
-                    </div>
+                        @if ($estudiante->foto)
+                            <img src="{{ asset('storage/' . $estudiante->foto) }}"
+                                class="w-28 h-28 rounded-full object-cover border-4 border-white shadow-lg bg-white">
+                        @else
+                            <div
+                                class="w-28 h-28 rounded-full bg-white text-indigo-600
+                           flex items-center justify-center text-3xl font-bold
+                           border-4 border-white shadow-lg">
+                                {{ strtoupper(substr($estudiante->nombre, 0, 1)) }}
+                            </div>
+                        @endif
 
-                    <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Edad</label>
-                            <input type="number" name="edad" value="{{ $estudiante->edad }}" 
-                                   class="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition-all text-sm text-slate-700 bg-slate-50/50" required>
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Teléfono</label>
-                            <input type="text" name="telefono" value="{{ $estudiante->telefono }}" 
-                                   class="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition-all text-sm text-slate-700 bg-slate-50/50" required>
-                        </div>
-                    </div>
-
-                    <div>
-                        <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Lenguaje Principal</label>
-                        <input type="text" name="lenguaje" value="{{ $estudiante->lenguaje }}" 
-                               class="w-full px-4 py-2.5 rounded-lg border border-slate-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-200 outline-none transition-all text-sm text-slate-700 bg-slate-50/50" required>
-                    </div>
-
-                    <div class="pt-4">
-                        <button type="submit" 
-                                class="w-full bg-amber-500 hover:bg-amber-600 text-white font-semibold py-3 rounded-xl transition-all shadow-md shadow-amber-200 flex justify-center items-center gap-2">
-                            <svg xmlns="http://www.w3.org" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                                <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
-                                <path fill-rule="evenodd" d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" clip-rule="evenodd" />
+                        <label for="foto"
+                            class="absolute bottom-1 right-1 bg-white border border-slate-200 rounded-full p-2.5
+                       cursor-pointer shadow hover:bg-indigo-50 transition group-hover:scale-105">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-600" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 7h4l2-3h6l2 3h4v13H3V7z" />
                             </svg>
-                            Actualizar Información
-                        </button>
+                        </label>
                     </div>
-                </form>
+
+                    <input type="file" id="foto" name="foto" form="editForm" accept="image/*" class="hidden">
+
+                    <div class="mt-4 text-center text-white">
+                        <h1 class="text-xl font-bold tracking-tight">
+                            Editar estudiante
+                        </h1>
+                        <p class="text-xs text-indigo-100 mt-1 opacity-90">
+                            Registro #{{ $estudiante->id }}
+                        </p>
+                    </div>
+                </div>
             </div>
-            
-            <div class="bg-slate-50 px-8 py-4 border-t border-slate-100 flex justify-center">
-                <p class="text-[10px] text-slate-400 uppercase tracking-widest font-medium italic">Editando registro existente</p>
-            </div>
+
+
+            <form id="editForm" action="{{ route('estudiantes.actualizar', $estudiante->id) }}" method="POST"
+                enctype="multipart/form-data" class="p-8 space-y-6">
+
+                @csrf
+                @method('PUT')
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-500 uppercase mb-1">
+                        Nombre completo
+                    </label>
+                    <input type="text" name="nombre" value="{{ $estudiante->nombre }}"
+                        class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50
+                               input-focus outline-none text-sm transition"
+                        required>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-500 uppercase mb-1">
+                        Correo electrónico
+                    </label>
+                    <input type="email" name="correo" value="{{ $estudiante->correo }}"
+                        class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50
+                               input-focus outline-none text-sm transition"
+                        required>
+                </div>
+
+                <div class="grid grid-cols-2 gap-5">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-500 uppercase mb-1">
+                            Edad
+                        </label>
+                        <input type="number" name="edad" value="{{ $estudiante->edad }}"
+                            class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50
+                                   input-focus outline-none text-sm transition"
+                            required>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-500 uppercase mb-1">
+                            Teléfono
+                        </label>
+                        <input type="text" name="telefono" value="{{ $estudiante->telefono }}"
+                            class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50
+                                   input-focus outline-none text-sm transition"
+                            required>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-500 uppercase mb-1">
+                        Lenguaje dominante
+                    </label>
+                    <input type="text" name="lenguaje" value="{{ $estudiante->lenguaje }}"
+                        class="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50
+                               input-focus outline-none text-sm transition"
+                        required>
+                </div>
+
+                <button type="submit"
+                    class="w-full bg-gradient-to-r from-indigo-600 to-indigo-700
+                           hover:from-indigo-700 hover:to-indigo-800
+                           text-white font-semibold py-3.5 rounded-xl
+                           transition shadow-lg active:scale-[0.98]">
+                    Guardar cambios
+                </button>
+            </form>
         </div>
     </div>
 
 </body>
+
 </html>
