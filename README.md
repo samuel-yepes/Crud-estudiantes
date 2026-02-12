@@ -15,6 +15,10 @@ Proyecto desarrollado para la gestión de estudiantes.
 
 ## 💻 Requisitos
 * **PostgreSQL**: 15.4
+* **php**: 8.2.9
+* **Laravel**: 12.0
+
+
 
 ## ejecutar el proyecto
 
@@ -25,7 +29,6 @@ Proyecto desarrollado para la gestión de estudiantes.
    `composer install`
 
 3. **Configurar variables de entorno:**
-   - Copiar `.env.example` a `.env`
    - Configurar la conexión a PostgreSQL en el `.env`.
 
 4. **Importar la Base de Datos:**
@@ -46,3 +49,6 @@ Proyecto desarrollado para la gestión de estudiantes.
     DB_DATABASE=practica
     DB_USERNAME=postgres
     DB_PASSWORD=12345678
+
+7. **servidor local para corre el proyecto:**
+   php artisan serve
