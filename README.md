@@ -47,8 +47,8 @@ Proyecto desarrollado para la gestión de estudiantes.
     DB_HOST=local
     DB_PORT=5432
     DB_DATABASE=practica
-    DB_USERNAME=postgres
-    DB_PASSWORD=12345678
+    DB_USERNAME="nombre"
+    DB_PASSWORD="contraseña"
 
 7. **servidor local para corre el proyecto:**
    php artisan serve
